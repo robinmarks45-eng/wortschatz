@@ -1,0 +1,31 @@
+Wortschatz A1–B2 auf Android & iPhone
+=====================================
+
+WEG 1 – Sofort, ohne Installation (Android + iPhone)
+Den claude.ai-Link der App im Handy-Browser (Safari/Chrome) oder in der Claude-App öffnen.
+Fortschritt wird mit deinem Konto synchronisiert (Mac + Handy gleich). Braucht Internet.
+Safari: Teilen → „Zum Home-Bildschirm“ für ein Icon.
+
+WEG 2 – Einzelne Datei (vor allem Android)
+Wortschatz-mobile.html aufs Handy kopieren und mit Chrome öffnen
+(Dateien-App → Datei antippen → „Öffnen mit Chrome“). Läuft komplett offline.
+iPhone: Die Dateien-App zeigt HTML nur als Vorschau OHNE JavaScript – dort funktioniert die
+einzelne Datei nicht. Für das iPhone Weg 1 oder Weg 3 nehmen.
+
+WEG 3 – Als echte App installieren, offline (Android + iPhone) = PWA
+Den Ordner aus Wortschatz-PWA.zip einmal kostenlos online stellen, z. B.:
+  • GitHub Pages: neues Repository → alle Dateien hochladen → Settings → Pages → Branch „main“ → Save.
+  • oder Netlify / Cloudflare Pages: Ordner per Drag & Drop hochladen.
+Dann die Adresse auf dem Handy öffnen:
+  • iPhone (Safari): Teilen → „Zum Home-Bildschirm“.
+  • Android (Chrome): Menü ⋮ → „App installieren“ / „Zum Startbildschirm hinzufügen“.
+Danach startet die App mit eigenem Icon im Vollbild und funktioniert auch ohne Internet.
+
+FORTSCHRITT
+Jede Variante speichert getrennt (Weg 2/3: nur auf diesem Handy).
+Übertragen: Einstellungen → „Backup speichern“ → auf dem anderen Gerät „Backup laden“.
+Auf dem iPhone öffnet „Backup speichern“ das Teilen-Menü → „In Dateien sichern“.
+
+AUSSPRACHE
+Nutzt die Sprachausgabe des Handys. iPhone: Einstellungen → Bedienungshilfen → Gesprochene Inhalte →
+Stimmen → Deutsch (z. B. „Anna“) laden. Android: Google-Sprachausgabe → Deutsch installieren.
