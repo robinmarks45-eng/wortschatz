@@ -102,9 +102,9 @@ select{border:1px solid var(--line);background:var(--surface);border-radius:10px
  .detail[hidden]{display:none}}
 .d-close{display:none}
 @media (max-width:900px){.d-close{display:inline-block}}
-.d-nav{position:sticky;bottom:0;z-index:3;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:center;margin:14px -2px -2px;padding:10px 2px max(6px,env(safe-area-inset-bottom,0px));background:var(--surface);border-top:1px solid var(--line)}
-.d-nav > .btn{min-height:44px}.d-nav .btn:last-child{justify-self:end}.d-nav .hint{text-align:center;white-space:nowrap}
-.d-nav-audio{display:grid;justify-items:center;gap:4px}.d-nav-audio .play{width:44px;height:44px}
+.d-nav{position:sticky;bottom:0;z-index:3;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:center;margin:10px -2px -2px;padding:4px 2px;background:var(--surface);border-top:1px solid var(--line)}
+.d-nav > .btn{min-height:44px;width:100%;max-width:88px;justify-self:start;padding:5px 8px;white-space:nowrap}.d-nav .btn:last-child{justify-self:end}.d-nav .hint{text-align:center;white-space:nowrap}
+.d-nav-audio{display:flex;align-items:center;justify-content:center;gap:6px}.d-nav-audio .play{order:-1;width:44px;height:44px}.d-nav-audio .hint{font-size:.72rem}
 .d-head{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
 .d-word{font-family:var(--f-display);font-weight:800;font-size:2rem;line-height:1.1;letter-spacing:-.01em;margin:0;overflow-wrap:anywhere;text-wrap:balance}
 .d-sub{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px;color:var(--muted)}
@@ -986,7 +986,7 @@ function renderDetail(open){
     <span class="st ${status(r)}" style="align-self:center">${ST_LABEL[status(r)]}${s?` · next review ${s[0]<=today()?'today':'in '+(s[0]-today())+' d'}`:''}</span>
   </div>
   <p class="hint" style="margin-top:10px">Source: ${esc(r.src||LV_SRC[r.L])}</p>
-  <div class="d-nav"><button class="btn ghost sm" id="dPrev" ${navPos<=0?'disabled':''}>← Previous</button><div class="d-nav-audio"><span class="hint">${navPos>=0?navPos+1+' / '+nav.length:''}</span><button class="play" data-say="w" aria-label="Pronunciation" title="Pronounce word">${PLAY}</button></div><button class="btn ghost sm" id="dNext" ${navPos<0||navPos>=nav.length-1?'disabled':''}>Next →</button></div>`;
+  <div class="d-nav"><button class="btn ghost sm" id="dPrev" aria-label="Previous word" ${navPos<=0?'disabled':''}>← Back</button><div class="d-nav-audio"><span class="hint">${navPos>=0?navPos+1+' / '+nav.length:''}</span><button class="play" data-say="w" aria-label="Pronunciation" title="Pronounce word">${PLAY}</button></div><button class="btn ghost sm" id="dNext" ${navPos<0||navPos>=nav.length-1?'disabled':''}>Next →</button></div>`;
   const dc=$('#dClose'); if(dc) dc.onclick=()=>{ if(history.state&&history.state.d) history.back(); else el.hidden=true; };
   const dp=$('#dPrev'), dn=$('#dNext'); if(dp) dp.onclick=()=>moveDetail(-1); if(dn) dn.onclick=()=>moveDetail(1);
   if(open && window.innerWidth<=900 && !(history.state&&history.state.d)) try{ history.pushState({d:1},''); }catch(e){}
