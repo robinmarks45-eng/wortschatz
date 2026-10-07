@@ -20,7 +20,7 @@ input,select,textarea{font-size:16px}</style>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Gentium+Book+Plus:ital@0;1&display=swap">
 <style>
-/* Layout: Karteikasten — a level rail, a work area with list + detail; flashcards drawn as ruled index cards. */
+/* Layout: Karteikasten — a level rail, a work area with list + detail; plain flashcard faces. */
 :root{
   --bg:#e9edf1; --surface:#ffffff; --surface2:#f4f6f9; --ink:#16202b; --muted:#566476; --line:#d3dae3;
   --accent:#d89b00; --accent-ink:#1b1400; --btn:#16202b; --btn-ink:#ffffff;
@@ -103,7 +103,8 @@ select{border:1px solid var(--line);background:var(--surface);border-radius:10px
 .d-close{display:none}
 @media (max-width:900px){.d-close{display:inline-block}}
 .d-nav{position:sticky;bottom:0;z-index:3;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:center;margin:14px -2px -2px;padding:10px 2px max(6px,env(safe-area-inset-bottom,0px));background:var(--surface);border-top:1px solid var(--line)}
-.d-nav .btn:last-child{justify-self:end}.d-nav .hint{text-align:center;white-space:nowrap}
+.d-nav > .btn{min-height:44px}.d-nav .btn:last-child{justify-self:end}.d-nav .hint{text-align:center;white-space:nowrap}
+.d-nav-audio{display:grid;justify-items:center;gap:4px}.d-nav-audio .play{width:44px;height:44px}
 .d-head{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
 .d-word{font-family:var(--f-display);font-weight:800;font-size:2rem;line-height:1.1;letter-spacing:-.01em;margin:0;overflow-wrap:anywhere;text-wrap:balance}
 .d-sub{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px;color:var(--muted)}
@@ -147,9 +148,7 @@ table.forms th{color:var(--muted);font-weight:400;font-size:.8rem}
 .kpi{background:var(--surface2);border-radius:10px;padding:8px;text-align:center}
 .kpi b{display:block;font-family:var(--f-display);font-size:1.4rem;font-variant-numeric:tabular-nums}
 .kpi span{font-size:.72rem;color:var(--muted)}
-.card{position:relative;background:var(--surface);border-radius:6px;min-height:300px;padding:34px 22px 22px;box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(0,0,0,.35);
-  background-image:linear-gradient(var(--card-rule),var(--card-rule)),repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--card-line) 31px,var(--card-line) 32px);
-  background-size:100% 2px,100% 100%;background-position:0 26px,0 28px;background-repeat:no-repeat,no-repeat;border:1px solid var(--line)}
+.card{position:relative;background:var(--surface);border-radius:6px;min-height:300px;padding:34px 22px 22px;box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(0,0,0,.35);border:1px solid var(--line)}
 .card .corner{position:absolute;top:6px;left:12px;right:12px;display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted)}
 .card .face{text-align:center;display:grid;gap:10px;justify-items:center;padding-top:16px}
 .card .big{font-family:var(--f-display);font-weight:800;font-size:clamp(1.6rem,5vw,2.6rem);line-height:1.15;overflow-wrap:anywhere;text-wrap:balance}
@@ -987,7 +986,7 @@ function renderDetail(open){
     <span class="st ${status(r)}" style="align-self:center">${ST_LABEL[status(r)]}${s?` · next review ${s[0]<=today()?'today':'in '+(s[0]-today())+' d'}`:''}</span>
   </div>
   <p class="hint" style="margin-top:10px">Source: ${esc(r.src||LV_SRC[r.L])}</p>
-  <div class="d-nav"><button class="btn ghost sm" id="dPrev" ${navPos<=0?'disabled':''}>← Previous</button><span class="hint">${navPos>=0?navPos+1+' / '+nav.length:''}</span><button class="btn ghost sm" id="dNext" ${navPos<0||navPos>=nav.length-1?'disabled':''}>Next →</button></div>`;
+  <div class="d-nav"><button class="btn ghost sm" id="dPrev" ${navPos<=0?'disabled':''}>← Previous</button><div class="d-nav-audio"><span class="hint">${navPos>=0?navPos+1+' / '+nav.length:''}</span><button class="play" data-say="w" aria-label="Pronunciation" title="Pronounce word">${PLAY}</button></div><button class="btn ghost sm" id="dNext" ${navPos<0||navPos>=nav.length-1?'disabled':''}>Next →</button></div>`;
   const dc=$('#dClose'); if(dc) dc.onclick=()=>{ if(history.state&&history.state.d) history.back(); else el.hidden=true; };
   const dp=$('#dPrev'), dn=$('#dNext'); if(dp) dp.onclick=()=>moveDetail(-1); if(dn) dn.onclick=()=>moveDetail(1);
   if(open && window.innerWidth<=900 && !(history.state&&history.state.d)) try{ history.pushState({d:1},''); }catch(e){}
