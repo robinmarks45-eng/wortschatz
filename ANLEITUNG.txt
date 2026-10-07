@@ -27,5 +27,7 @@ Jede Variante speichert getrennt (Weg 2/3: nur auf diesem Handy).
 Auf dem iPhone öffnet „Backup speichern“ das Teilen-Menü → „In Dateien sichern“.
 
 AUSSPRACHE
-Nutzt die Sprachausgabe des Handys. iPhone: Einstellungen → Bedienungshilfen → Gesprochene Inhalte →
-Stimmen → Deutsch (z. B. „Anna“) laden. Android: Google-Sprachausgabe → Deutsch installieren.
+Alle Wörter und Beispielsätze nutzen ausschließlich die deutsche Sprachausgabe des Geräts (keine
+mitgelieferten Audioaufnahmen). Die Stimme und Geschwindigkeit können in der App eingestellt werden.
+iPhone: Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen → Deutsch
+(z. B. „Anna“) laden. Android: Google-Sprachausgabe → Deutsch installieren.
