@@ -78,7 +78,7 @@ nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(-
 select{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:7px 8px;max-width:100%}
 .chk{display:inline-flex;gap:6px;align-items:center;font-size:.85rem;color:var(--muted)}
 .list{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
-.row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 12px;border-bottom:1px solid var(--line);cursor:pointer;background:none;border-left:0;border-right:0;border-top:0;width:100%;text-align:left}
+.row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 12px;border-bottom:1px solid var(--line);cursor:pointer;background:none;border-left:0;border-right:0;border-top:0;width:100%;text-align:left;font:inherit;color:inherit}.row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}.row .row-play{width:30px;height:30px}.row .row-play svg{width:15px;height:15px}
 .row:last-child{border-bottom:0}
 .row:hover{background:var(--surface2)}
 .row[aria-current="true"]{background:var(--surface2);box-shadow:inset 3px 0 0 var(--accent)}
@@ -1072,15 +1072,22 @@ function renderList(){
   const arr=filtered(); const shown=arr.slice(0,UI.limit);
   $('#count').textContent = $('#fAll').checked ? `${arr.length} results in all levels` + ($('#fTopic').value?` · ${TP_NAME[$('#fTopic').value]}`:'') : `${arr.length} of ${DATA[UI.lv].filter(r=>!isPhrase(r)).length} · ${LV_NAME[UI.lv]} (${LV_SRC[UI.lv]})` + (DATA[UI.lv].some(r=>r.pri)?' · Core/Useful/Extended = study priority':'');
   $('#list').innerHTML = shown.length ? shown.map(r => { const s=status(r);
-    return `<button class="row" data-id="${r.id}" aria-current="${UI.sel===r.id}"><span class="gdot ${gclass(r)}"></span>
+    return `<div class="row" role="button" tabindex="0" data-id="${r.id}" aria-current="${UI.sel===r.id}"><span class="gdot ${gclass(r)}"></span>
       <span style="min-width:0"><span class="w">${wordHTML(r)}</span> ${r.L!==UI.lv?`<span class="tag">${r.L}</span>`:''} ${r.pri?`<span class="tag pri ${r.pri}">${r.pri==='core'?'Core':r.pri==='useful'?'Useful':'Extended'}</span>`:''}<br><span class="e">${esc(r.e||'')}</span></span>
-      <span class="meta">${isStar(r)?'<span class="star">★</span>':''}<span class="st ${s}">${ST_LABEL[s]}</span></span></button>`; }).join('')
+      <span class="meta"><button class="play sm row-play" type="button" data-row-say="${r.id}" aria-label="Pronounce ${esc(r.w)}" title="Pronounce">${PLAY}</button>${isStar(r)?'<span class="star">★</span>':''}<span class="st ${s}">${ST_LABEL[s]}</span></span></div>`; }).join('')
     + (arr.length>UI.limit?`<button class="more" id="moreBtn">${arr.length-UI.limit} more</button>`:'') : (UI.lv==='MY'&&!DATA.MY.length? `<div class="empty">No words of your own yet. Tap “+ Add word” or import a list (e.g. from Anki: German⇥English).</div>` : `<div class="empty">No results. Change the filters or tick “all levels”.</div>`);
   if(!UI.sel || !BYID[UI.sel]) { if(window.innerWidth>900 && shown[0]) UI.sel=shown[0].id; }
   renderDetail();
 }
-$('#list').addEventListener('click', e => { if(e.target.id==='moreBtn'){ UI.limit+=300; renderList(); return; }
+$('#list').addEventListener('click', e => {
+  const p=e.target.closest('[data-row-say]'); if(p){ e.stopPropagation(); const r=BYID[p.dataset.rowSay]; if(r) AUDIO.word(r); return; }
+  if(e.target.id==='moreBtn'){ UI.limit+=300; renderList(); return; }
   const b=e.target.closest('.row'); if(!b) return; UI.sel=b.dataset.id; document.querySelectorAll('.row[aria-current="true"]').forEach(x=>x.setAttribute('aria-current','false')); b.setAttribute('aria-current','true'); renderDetail(true); });
+$('#list').addEventListener('keydown', e => {
+  if(e.target.closest('[data-row-say]')) return;
+  const b=e.target.closest('.row'); if(!b) return;
+  if(e.key==='Enter'||e.key===' '){ e.preventDefault(); b.click(); }
+});
 
 function saveDetailNoteNow(){
   const r=BYID[UI.sel], box=$('#wNote'); if(!r||!box) return;
